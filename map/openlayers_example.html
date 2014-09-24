@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8" />
+<title>let's make the world more our way! :)</title>
+<div id="map" style="top: 0; left: 0; bottom: 0; right: 0; position: fixed;"><script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+	// http://terokarvinen.com/2012/getting-started-with-openlayers-and-openstreetmap
+    //http://trac.osgeo.org/openlayers/wiki/SettingZoomLevels
+	// var options = { numZoomLevels: 2, controls: []};
+    // var map = new OpenLayers.Map('map', options);
+    var map = new OpenLayers.Map('map');
+    // Consegui adiciona mais controles por meio deste link http://dev.openlayers.org/docs/files/OpenLayers/Control-js.html
+	/*
+	map.addControl(new OpenLayers.Control.PanZoomBar());
+	map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
+	map.addControl(new OpenLayers.Control.Permalink());
+	map.addControl(new OpenLayers.Control.Permalink('permalink'));
+	map.addControl(new OpenLayers.Control.MousePosition());
+	map.addControl(new OpenLayers.Control.OverviewMap());
+	map.addControl(new OpenLayers.Control.KeyboardDefaults());
+	*/
+
+    map.addLayer(new OpenLayers.Layer.OSM());
+
+    // Center Map on Florianopolis (: -> One best description for OpenLayers
+
+ 	var lonLat = new OpenLayers.LonLat(-48.52085302932768,-27.601453914620006).transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+ 	var zoom=16;
+ 	map.setCenter(lonLat, zoom);
+</script>

@@ -1,0 +1,48 @@
+<html>
+<body>
+    <div id="mapdiv" class="smallmap"></div>
+<form name="coord">
+<input type="text" name="x" /><br />
+<input type="text" name="y" /><br />
+</form>
+</body>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<script>
+
+    map = new OpenLayers.Map("mapdiv");
+    epsg4326 = new OpenLayers.Projection("EPSG:4326");
+    epsg900913 = new OpenLayers.Projection("EPSG:900913");
+
+    var osm = new OpenLayers.Layer.OSM();
+    var vectors = new OpenLayers.Layer.Vector("Vector Layer");
+    map.addLayers([osm, vectors]);
+
+
+    var center = new OpenLayers.LonLat(-122.3208990,45.4251210).transform(epsg4326, epsg900913);
+    var customer = new OpenLayers.LonLat(-122.3188300,45.4251840).transform(epsg4326, epsg900913);
+    var point = new OpenLayers.Geometry.Point(customer.lon,customer.lat);
+
+    vectors.addFeatures([new OpenLayers.Feature.Vector(point)]);
+
+    drag = new OpenLayers.Control.DragFeature(vectors, {autoActivate: true, onComplete: onCompleteMove});
+
+    function onCompleteMove(feature) {
+        var point_transformed;
+        if (feature) {
+            point_transformed = feature.clone().geometry.transform(epsg900913, epsg4326);
+            document.coord.x.value = point_transformed.x;
+            document.coord.y.value = point_transformed.y;
+        }
+    }
+
+    map.addControl(drag);
+    map.setCenter(center, 15);
+</script>
+<style>
+.smallmap {
+    height: 80%;
+    width: 80%;
+}
+</style>
+</html>

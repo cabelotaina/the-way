@@ -1,0 +1,7 @@
+<script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script type="text/javascript" src="http://api.facilmap.org/facilmap.js"></script>
+<div id="map"></div>
+<script type="text/javascript">
+var map = new FacilMap.Map("map"); // "map" is the id of the div
+map.addLayer(new FacilMap.Layer.OSM.Mapnik("Mapnik"));
+</script>
